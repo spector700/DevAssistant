@@ -13,7 +13,7 @@ def main():
     lang = select_lang(lang_options)
     # Create the new project folder
     create_dir(lang)
-    # Ask if want to create git repo
+    # Ask to create git repo
     while True:
         ans = input("Do you want to create a github repo? (y | n)\n").lower()
         if ans == "y":
@@ -36,6 +36,7 @@ def select_lang(lang_options) -> str:
     return lang
 
 
+# Create and check for project directory and files
 def create_dir(lang: str):
     try:
         os.mkdir(path)
@@ -73,6 +74,7 @@ def create_dir(lang: str):
         )
 
 
+# Creates the repo and the github remote repo
 def create_repo():
     os.system("git init -b main")
     os.system(f"gh repo create {project} --add-readme --public --source=.")
