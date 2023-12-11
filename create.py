@@ -57,11 +57,20 @@ def create_dir(lang: str):
     # Check for .envrc
     full_path = os.path.join(path, ".envrc")
     if os.path.isfile(full_path):
-        print(".envrc exists\n")
+        print(".envrc exists")
     else:
-        print("Creating .envrc...\n")
+        print("Creating .envrc...")
         with open(".envrc", "w") as direnv:
             direnv.write("use flake")
+
+    # Check for .gitignore
+    full_path = os.path.join(path, ".gitignore")
+    if os.path.isfile(full_path):
+        print(".gitignore exists\n")
+    else:
+        os.system(
+            f"wget https://raw.githubusercontent.com/spector700/Templates/main/{lang}/.gitignore"
+        )
 
 
 def create_repo():
