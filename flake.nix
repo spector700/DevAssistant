@@ -1,6 +1,4 @@
 {
-  description = "Project";
-
   # Flake inputs
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
