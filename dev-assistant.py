@@ -1,5 +1,8 @@
 import sys
 import os
+from rich import print
+from rich.theme import Theme
+from rich.console import Console
 
 # Name of the new project
 project = sys.argv[1]
@@ -7,6 +10,9 @@ project = sys.argv[1]
 path = f"/home/nick/Projects/{project}"
 # Avaliable languages
 lang_options = ["Python"]
+
+print_theme = Theme({"exists": "green", "creating": "dark_orange3"})
+console = Console(theme=print_theme)
 
 
 def main():
@@ -49,8 +55,9 @@ def create_dir(lang: str):
     # Check for flake
     full_path = os.path.join(path, "flake.nix")
     if os.path.isfile(full_path):
-        print("\nflake.nix exists")
+        console.print("\nflake.nix exists", style="exists")
     else:
+        console.print("Downloading flake.nix", style="creating")
         os.system(
             f"wget https://raw.githubusercontent.com/spector700/Templates/main/{lang}/flake.nix"
         )
@@ -58,17 +65,18 @@ def create_dir(lang: str):
     # Check for .envrc
     full_path = os.path.join(path, ".envrc")
     if os.path.isfile(full_path):
-        print(".envrc exists")
+        console.print(".envrc exists", style="exists")
     else:
-        print("Creating .envrc...")
+        console.print("Creating .envrc...", style="creating")
         with open(".envrc", "w") as direnv:
             direnv.write("use flake")
 
     # Check for .gitignore
     full_path = os.path.join(path, ".gitignore")
     if os.path.isfile(full_path):
-        print(".gitignore exists\n")
+        console.print(".gitignore exists\n", style="exists")
     else:
+        console.print("Downloading .gitignore", style="creating")
         os.system(
             f"wget https://raw.githubusercontent.com/spector700/Templates/main/{lang}/.gitignore"
         )
