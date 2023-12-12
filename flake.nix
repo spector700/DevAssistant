@@ -31,7 +31,7 @@
               wget
               # Python plus helper tools
               (python311.withPackages (ps: with ps; [
-                pip # The pip installer
+                rich
               ]))
             ];
 
