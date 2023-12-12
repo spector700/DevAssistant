@@ -1,3 +1,3 @@
 #!/bin/sh
 
-python create.py $1
+python dev-assistant.py $1
