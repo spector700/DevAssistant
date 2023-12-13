@@ -1,7 +1,7 @@
 # DevAssistant
 
 Automation tool to create a nix flake dev environment with flake.nix and direnv. Also create a github repo if desired.
-Clone the Repository:
+
 
 ## Lanuages
 These are the current lanuages that have a flake [template](https://github.com/spector700/Templates).
@@ -17,6 +17,7 @@ These are the current lanuages that have a flake [template](https://github.com/s
 - wget
 - gh
 
+Clone the Repository:
 ```bash
 git clone https://github.com/spector700/DevAssistant.git
 cd DevAssistant
