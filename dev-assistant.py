@@ -9,7 +9,7 @@ PROJECT = sys.argv[1]
 # The directory for the projects
 PATH = f"/home/nick/Projects/{PROJECT}"
 # Avaliable languages
-LANG_OPTIONS = ["Python"]
+LANG_OPTIONS = ["Python", "Rust", "NodeJS"]
 
 print_theme = Theme({"exists": "green", "creating": "dark_orange3"})
 console = Console(theme=print_theme)
