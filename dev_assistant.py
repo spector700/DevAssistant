@@ -1,11 +1,9 @@
 #!/usr/bin/env python
 
-import sys
 import os
+import sys
 
 from rich import print
-from rich.theme import Theme
-from rich.console import Console
 
 if len(sys.argv) == 1:
     sys.exit("Usage: DevAssistant <project name>")
@@ -13,12 +11,9 @@ if len(sys.argv) == 1:
 # Name of the new project
 PROJECT = sys.argv[1]
 # The directory for the projects
-PATH = f"/home/nick/Projects/{PROJECT}"
+PATH = os.path.join(os.path.expanduser("~"), "Projects", PROJECT)
 # Avaliable languages
 LANG_OPTIONS = ["Python", "Rust", "NodeJS"]
-
-print_theme = Theme({"exists": "green", "creating": "dark_orange3"})
-console = Console(theme=print_theme)
 
 
 def main():
@@ -27,7 +22,7 @@ def main():
     create_dir(lang)
     # Ask to create git repo
     while True:
-        ans = input("Do you want to create a github repo? (Y | N) --> ").lower()
+        ans = input("\nDo you want to create a github repo? (y | n) --> ").lower()
         if ans == "y":
             create_repo()
             break
@@ -52,9 +47,9 @@ def select_lang(lang_options) -> str:
 def create_dir(lang):
     try:
         os.mkdir(PATH)
-        print(f"\nI created the folder {PROJECT}")
+        print(f"\nI created the folder {PROJECT}\n")
     except FileExistsError:
-        print(f"\nThe folder {PROJECT} already exists...")
+        print(f"\nThe folder {PROJECT} already exists...\n")
 
     os.chdir(PATH)
     os.system(f"nix flake init --refresh -t github:spector700/Templates/#{lang}")
@@ -63,9 +58,8 @@ def create_dir(lang):
 # Creates the repo and the github remote repo
 def create_repo():
     os.system("git init -b main")
-    os.system(f"gh repo create {PROJECT} --public --source=.")
     os.system("git add . && git commit -m 'initial commit'")
-    os.system("git push --set-upstream origin main")
+    os.system(f"gh repo create {PROJECT} --public --source=. --push")
 
 
 if __name__ == "__main__":
