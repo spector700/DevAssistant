@@ -1,8 +1,14 @@
+#!/usr/bin/env python
+
 import sys
 import os
+
 from rich import print
 from rich.theme import Theme
 from rich.console import Console
+
+if len(sys.argv) == 1:
+    sys.exit("Usage: DevAssistant <project name>")
 
 # Name of the new project
 PROJECT = sys.argv[1]
@@ -18,15 +24,11 @@ console = Console(theme=print_theme)
 def main():
     lang = select_lang(LANG_OPTIONS)
     # Create the new project folder
-    create_dir()
-    # Check or Download files
-    check_file(file="flake.nix", lang=lang, download=True)
-    check_file(file=".envrc")
+    create_dir(lang)
     # Ask to create git repo
     while True:
         ans = input("Do you want to create a github repo? (Y | N) --> ").lower()
         if ans == "y":
-            check_file(file=".gitignore", lang=lang, download=True)
             create_repo()
             break
         elif ans == "n":
@@ -38,7 +40,7 @@ def select_lang(lang_options) -> str:
     lang = ""
     while lang not in lang_options:
         for i in range(len(lang_options)):
-            print(f"{i + 1}. {lang_options[i]}\n")
+            print(f"{i + 1}. {lang_options[i]}")
         try:
             lang = lang_options[int(input("Select a number. --> ")) - 1]
         except (ValueError, IndexError):
@@ -47,7 +49,7 @@ def select_lang(lang_options) -> str:
 
 
 # Create and check for project directory and files
-def create_dir():
+def create_dir(lang):
     try:
         os.mkdir(PATH)
         print(f"\nI created the folder {PROJECT}")
@@ -55,31 +57,13 @@ def create_dir():
         print(f"\nThe folder {PROJECT} already exists...")
 
     os.chdir(PATH)
-
-
-def check_file(file, lang=None, download=False):
-    full_path = os.path.join(PATH, file)
-    if os.path.isfile(full_path):
-        console.print(f"{file} exists", style="exists")
-        return
-    else:
-        # Download from the Templates repo
-        if download:
-            console.print(f"Downloading {file}", style="creating")
-            os.system(
-                f"wget https://raw.githubusercontent.com/spector700/Templates/main/{lang}/{file}"
-            )
-        # Create the .envrc
-        else:
-            console.print("Creating .envrc...", style="creating")
-            with open(".envrc", "w") as direnv:
-                direnv.write("use flake")
+    os.system(f"nix flake init --refresh -t github:spector700/Templates/#{lang}")
 
 
 # Creates the repo and the github remote repo
 def create_repo():
     os.system("git init -b main")
-    os.system(f"gh repo create {PROJECT} --add-readme --public --source=.")
+    os.system(f"gh repo create {PROJECT} --public --source=.")
     os.system("git add . && git commit -m 'initial commit'")
     os.system("git push --set-upstream origin main")
 

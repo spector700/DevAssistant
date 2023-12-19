@@ -40,5 +40,23 @@
             '';
           };
       });
+
+      # Build the Python package
+      packages = forAllSystems ({ pkgs, ... }: {
+        default = pkgs.python3.pkgs.buildPythonPackage {
+          pname = "DevAssistant";
+          version = "0.1";
+          src = ./.;
+
+          buildInputs = with pkgs; [
+            python3Packages.rich
+          ];
+
+          meta = with pkgs.lib; {
+            description = "DevAssistant: A helpful tool";
+            license = licenses.mit;
+          };
+        };
+      });
     };
 }
