@@ -10,5 +10,4 @@ setup(
             "DevAssistant = dev_assistant:main",
         ],
     },
-    scripts=["dev_assistant.py"],
 )

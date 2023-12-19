@@ -28,7 +28,6 @@
             # The Nix packages provided in the environment
             packages = with pkgs; [
               gh
-              wget
               # Python plus helper tools
               (python311.withPackages (ps: with ps; [
                 rich
@@ -43,12 +42,12 @@
 
       # Build the Python package
       packages = forAllSystems ({ pkgs, ... }: {
-        default = pkgs.python3.pkgs.buildPythonPackage {
+        default = pkgs.python3Packages.buildPythonPackage {
           pname = "DevAssistant";
           version = "0.1";
           src = ./.;
 
-          buildInputs = with pkgs; [
+          propagatedBuildInputs = with pkgs; [
             python3Packages.rich
           ];
 
