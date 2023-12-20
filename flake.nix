@@ -21,6 +21,8 @@
       });
     in
     {
+      formatter = forAllSystems ({ pkgs }: { default = pkgs.nixpkgs-fmt; });
+
       # Development environment output
       devShells = forAllSystems ({ pkgs }: {
         default =
@@ -57,5 +59,12 @@
           };
         };
       });
+
+      homeManagerModules = {
+        dev-assistant = import ./module.nix {
+          inherit self;
+        };
+        default = self.homeManagerModules.dev-assistant;
+      };
     };
 }
