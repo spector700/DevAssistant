@@ -42,23 +42,7 @@
           };
       });
 
-      # Build the Python package
-      packages = forAllSystems ({ pkgs, ... }: {
-        default = pkgs.python3Packages.buildPythonPackage {
-          pname = "DevAssistant";
-          version = "0.1";
-          src = ./.;
-
-          propagatedBuildInputs = with pkgs; [
-            python3Packages.rich
-          ];
-
-          meta = with pkgs.lib; {
-            description = "DevAssistant: A helpful tool";
-            license = licenses.mit;
-          };
-        };
-      });
+      packages = forAllSystems ({ pkgs }: { default = pkgs.callPackage ./. { }; });
 
       homeManagerModules = {
         dev-assistant = import ./module.nix {

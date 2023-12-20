@@ -1,4 +1,5 @@
 { pkgs, lib, config, ... }:
+with lib;
 let
   cfg = config.programs.dev-assistant;
 in
