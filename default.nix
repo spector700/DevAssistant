@@ -1,4 +1,4 @@
-{ python3Packages, lib, ... }:
+{ python3Packages, pkgs, lib, ... }:
 
 python3Packages.buildPythonApplication rec {
   pname = "DevAssistant";
@@ -6,6 +6,7 @@ python3Packages.buildPythonApplication rec {
   src = ./.;
 
   propagatedBuildInputs = [
+    pkgs.gh
     python3Packages.rich
   ];
 
