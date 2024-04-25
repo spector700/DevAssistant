@@ -13,7 +13,7 @@ PROJECT = sys.argv[1]
 # The directory for the projects
 PATH = os.path.join(os.path.expanduser("~"), "Projects", PROJECT)
 # Avaliable languages
-LANG_OPTIONS = ["Python", "Rust", "NodeJS"]
+LANG_OPTIONS = ["Python", "Rust", "NodeJS", "C++"]
 
 
 def main():
