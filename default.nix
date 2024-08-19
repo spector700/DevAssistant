@@ -1,6 +1,11 @@
-{ python3Packages, pkgs, lib, ... }:
+{
+  python3Packages,
+  pkgs,
+  lib,
+  ...
+}:
 
-python3Packages.buildPythonApplication rec {
+python3Packages.buildPythonApplication {
   pname = "DevAssistant";
   version = "0.1";
   src = ./.;
